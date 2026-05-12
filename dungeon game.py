@@ -188,7 +188,7 @@ def state_explore(player_name, health, inventory, current_room, rooms):
     else:
         print(f"\n[!] {choice} is not something you can do...")
 
-    # ⭐ AUTO-DETECT STATE BASED ON ROOM
+    # AUTO-DETECT STATE BASED ON ROOM
     next_state = rooms[current_room].get("state", STATE_EXPLORE)
 
     return health, current_room, next_state, False
@@ -196,7 +196,6 @@ def state_explore(player_name, health, inventory, current_room, rooms):
 
 def state_boss(player_name, health, inventory, current_room, rooms):
     boss_health = 100
-    print("\nYou enter the boss chamber...\n")
 
     while True:
         computer = random.choice(boss_moves)
