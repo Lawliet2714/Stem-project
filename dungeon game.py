@@ -11,9 +11,6 @@ import copy
 STATE_EXPLORE = "explore"
 STATE_BOSS    = "boss"
 
-# ─────────────────────────────────────────────
-# ROOM DEFINITIONS (now include "state")
-# ─────────────────────────────────────────────
 rooms_template = {
     "cell":  {
         "description": (
