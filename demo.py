@@ -171,11 +171,6 @@ def play():
         describe_room(current_room,  player_name)
         show_status(health,  inventory)
 
-        # Boss room stops the loop
-
-        #boss_moves =["parry", "reckless attack", "reinforcement", "blood attack"]
-        #options = ["attack","heal",  "restart", "arshy", "Tunder Clap And Flash"]
-
         if current_room == "boss_room":
             while running:
                 computer = random.choice(boss_moves)
