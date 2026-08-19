@@ -1,5 +1,5 @@
-import random
-import copy
+import random  # import the random module
+import copy  # import the copy module
 
 # ═══════════════════════════════════════════════════════════════
 #  DUNGEON ESCAPE  —  A Text Adventure
@@ -8,59 +8,59 @@ import copy
 # ─────────────────────────────────────────────
 # STATES
 # ─────────────────────────────────────────────
-STATE_EXPLORE = "explore"
-STATE_BOSS    = "boss"
+STATE_EXPLORE = "explore" # A state in the game that transition points when moving
+STATE_BOSS    = "boss" # Transition to the boss phase of the game 
 
-rooms_template = {
-    "cell":  {
-        "description": (
-            "You wake up on a cold stone floor. Your head throbs.\n"
-            f"A wooden door hangs open to the \033[91mNORTH.\033[0m\n"
+rooms_template = { # Holds all the roooms in the game 
+    "cell":  { # Holds the bulk of info on the cell (exits)
+        "description": ( # holds all the texts for the cell
+            "You wake up on a cold stone floor. Your head throbs.\n" 
+            f"A wooden door hangs open to the \033[91mNORTH.\033[0m\n" # just color for the text 
             "Scratched into the wall: Don't trust the guard.\n"
             "A hooded criminal is among us\n"
             "type in command \033[91mlook\033[0m to check out what you have and your surroundings"
         ),
-        "exits": {"north": "corridor"},
-        "state": STATE_EXPLORE
+        "exits": {"north": "corridor"}, # {"key": "value"} checks for the exit which is north
+        "state": STATE_EXPLORE # helps Triggers the state_explore in the game loop
     },
 
-    "corridor": {
-        "description": (
+    "corridor": { # holds the bulk of the info (exits)
+        "description": ( # Holds the text for the room 
             "A long torchlit corridor stretches out.\n"
             f"A heavy door leads \033[91mEAST\033[0m — sounds like clanging metal.\n"
             f"The main passage continues \033[91mNORTH\033[0m."
 
         ),
-        "exits": {"north": "guard_post", "east": "armory", "south": "cell"},
-        "state": STATE_EXPLORE
+        "exits": {"north": "guard_post", "east": "armory", "south": "cell"}, # These are the different types of exits I can take
+        "state": STATE_EXPLORE 
     },
 
-    "armory": {
+    "armory": { # the room armory holds the sword and is a room that can be explored
         "description": (
             "Dusty weapon racks line the walls.\n"
             "Most are bare, but a SWORD still hangs near the door.\n"
             "The corridor is back to the WEST."
         ),
-        "exits": {"west": "corridor"},
-        "item": "sword",
-        "state": STATE_EXPLORE
+        "exits": {"west": "corridor"}, # A dictionary that holds the exits for the armory
+        "item": "sword", # Is a dictionary that holds the item for the armory
+        "state": STATE_EXPLORE # the state of the armory is set to explore
     },
 
-    "guard_post": {
+    "guard_post": { # holds the guard post and is a room that can be explored
         "description": (
             "A burly guard sits at a table, half-asleep.\n"
             f"A \033[91mKEY\033[0m hangs from his belt.\n"
             f"A locked iron door stands to the \033[91mNORTH\033[0m. The corridor is \033[91mSOUTH\033[0m."
 
         ),
-        "exits": {"north": "great_hall", "south": "corridor"},
-        "locked_north": True,
-        "item": "key",
-        "guard": True,
-        "state": STATE_EXPLORE
+        "exits": {"north": "great_hall", "south": "corridor"}, # holds the exits for the guard post 2 ways
+        "locked_north": True, # stops me from going north unless I have the key
+        "item": "key", #  an item that is in the guard post that is used for going north
+        "guard": True, # a boolean that is used to check if the guard is awake or not
+        "state": STATE_EXPLORE # the state of the guard post is set to let the player explore the room
     },
 
-    "great_hall": {
+    "great_hall": { # holds the great hall and is a room that can be explored
         "description": (
             "A long torchlit corridor stretches out.\n"
 f"A heavy door leads \033[91mEAST\033[0m — sounds like clanging metal.\n"
@@ -68,24 +68,24 @@ f"The walls shimmer with a \033[93mglinting gold\033[0m hue.\n"
 f"The main passage continues \033[91mNORTH\033[0m."
 
         ),
-        "exits": {"north": "boss_room", "east": "treasure_room", "south": "guard_post"},
-        "state": STATE_EXPLORE
+        "exits": {"north": "boss_room", "east": "treasure_room", "south": "guard_post"}, # holds the exits for the great hall 3 ways
+        "state": STATE_EXPLORE # the state of the great hall is set to let the player explore the great hall room  
     },
 
-    "treasure_room": {
-        "description": (
+    "treasure_room": { # holds the health potion and is a room that can be explored
+        "description": ( 
             "Gold coins and jewels blanket the floor.\n"
            "You see a \033[94mscythe\033[0m among them that \033[93mdisappears\033[0m magically.\n"
             "Among them sits a glowing \033[94mHEALTH POTION\033[0m.\n"
             "The great hall is back to the \033[91mWEST\033[0m."
 
         ),
-        "exits": {"west": "great_hall"},
-        "item": "health potion",
-        "state": STATE_EXPLORE
+        "exits": {"west": "great_hall"}, # holds the exits for the treasure room 1 way
+        "item": "health potion", # an item that is in the treasure room that is used for healing the player
+        "state": STATE_EXPLORE # a state that is set to let the player explore the treasure room
     },
 
-    "boss_room": {
+    "boss_room": { # the boss room is the final room and is a room that can be explored
         "description": (
             "You enter a giant dark room with a bunch of pillars.\n"
 "You see a black cloaked person.\n"
@@ -93,18 +93,20 @@ f"The main passage continues \033[91mNORTH\033[0m."
 "I almost feel bad for a being like you {name}.\n"
 "He cuts down one of the main pillars with the \033[94mscythe\033[0m."
         ),
-        "exits": {},
-        "state": STATE_BOSS
+        "exits": {}, # no exits. BEAT THE BOSS!!!
+        "state": STATE_BOSS # the state of the boss room is set to let the player fight the boss
     },
 }
 
-# ─────────────────────────────────────────────
-# WEAPON SYSTEM (NEW + CLEAN)
-# ─────────────────────────────────────────────
+# ─────────────────────────────
+# WEAPON SYSTEM 
+# ─────────────────────────────
 
-class Weapon:
-    def __init__(self, name):
-        self.name = name
+class Weapon: # creates the class of whatever weapon that is being used in the game
+    def __init__(self, name): # init is to initialize. 
+                              # self is the empty object that is being created.
+                              # name is the name of the weapon that is being used in the game ( blood sword, scythe, etc)
+        self.name = name # give the weapon flexibility to have a name attribute
 
     def light_attack(self):
         raise NotImplementedError
