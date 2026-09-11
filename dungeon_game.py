@@ -120,17 +120,14 @@ class Weapon: # creates the class of whatever weapon that is being used in the g
 
 class BloodSword(Weapon): # the blood sword inherts the wepon class 
     def __init__(self): # a defenetion 
-        super().__init__("Sword with blood stains") # What the sword is called 
-
-    # Normal attack (your original 25/20/15)
-    def light_attack(self):
-        return random.choice([25, 20, 15])
-
-    # Blood attack (your original 35/30/25)
-    def heavy_attack(self):
-        return random.choice([35, 30, 25])
-
-    # Thunder Clap and Flash (your original 40/35/30)
+        super().__init__("Sword with blood stains") # What the sword is called
+        
+    def light_attack(self): # has light attack 
+        return random.choice([25, 20, 15]) # the different damages that it can do 
+        
+    def heavy_attack(self): # # has a heavy attack
+        return random.choice([35, 30, 25]) # different damages if it uses a heavy attack
+        
     def special_attack(self):
         return random.choice([40, 35, 30])
 
