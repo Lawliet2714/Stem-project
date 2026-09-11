@@ -108,19 +108,19 @@ class Weapon: # creates the class of whatever weapon that is being used in the g
                               # name is the name of the weapon that is being used in the game ( blood sword, scythe, etc)
         self.name = name # give the weapon flexibility to have a name attribute
 
-    def light_attack(self):
-        raise NotImplementedError
+    def light_attack(self): # a trait every wepon in the class needs
+        raise NotImplementedError # will raise an error if the wepon dosen't have it 
 
-    def heavy_attack(self):
-        raise NotImplementedError
+    def heavy_attack(self): # a trait every wepon in the class needs
+        raise NotImplementedError # will raise an error if a wepon ddosen't have it
 
-    def special_attack(self):
-        raise NotImplementedError
+    def special_attack(self): # a trait every wepon in the class needs
+        raise NotImplementedError # will raise an error if a wepon ddosen't have it
 
 
-class BloodSword(Weapon):
-    def __init__(self):
-        super().__init__("Tunder clap and flash")
+class BloodSword(Weapon): # the blood sword inherts the wepon class 
+    def __init__(self): # a defenetion 
+        super().__init__("Tunder clap and flash") 
 
     # Normal attack (your original 25/20/15)
     def light_attack(self):
