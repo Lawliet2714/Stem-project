@@ -173,9 +173,9 @@ def describe_room(room_name, player_name, rooms): # holds room  name (cell, armo
     desc = rooms[room_name]["description"] # frinds the room name and the description in it 
     print("\n" + desc.format(name=player_name)) # prints the desc as well as the player name
 
-def look(room_name, player_name, inventory, health, rooms):
-    print("\nYou take a careful look around...")
-    describe_room(room_name, player_name, rooms)
+def look(room_name, player_name, inventory, health, rooms): # holds those parameters
+    print("\nYou take a careful look around...") # prints that
+    describe_room(room_name, player_name, rooms) 
     show_status(health, inventory)
 
 def handle_item(room, inventory, health):
