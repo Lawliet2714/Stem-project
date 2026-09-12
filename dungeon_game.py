@@ -136,9 +136,10 @@ class WeaponManager:
     def __init__(self):
         self.weapon = BloodSword()  # default weapon
 
+    # you can swap out wepons mid game
     def equip(self, weapon):
         self.weapon = weapon
-
+    # take the wepon stored in light attack and run it
     def light(self):
         return self.weapon.light_attack()
 
@@ -149,14 +150,14 @@ class WeaponManager:
         return self.weapon.special_attack()
 
 
-weapon_manager = WeaponManager()
+weapon_manager = WeaponManager() # all attacks in wepon manager is stored here
 
 
-boss_moves = ["parry", "reckless attack", "reinforcement", "blood attack"]
-options    = ["attack", "heal", "restart", "tunder clap and flash", "arshy"]
+boss_moves = ["parry", "reckless attack", "reinforcement", "blood attack"] # The moves that the boss has 
+options    = ["attack", "heal", "restart", "tunder clap and flash", "arshy"] # the moves that the player has
 
-STATE_EXPLORE = "explore"
-STATE_BOSS = "boss"
+STATE_EXPLORE = "explore" # the state that let's you explore
+STATE_BOSS = "boss" # the state you go into at the boss battle
 
 # rooms_template must exist in your full file
 # (not included in your snippet)
