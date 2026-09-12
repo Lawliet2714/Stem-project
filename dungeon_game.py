@@ -159,21 +159,19 @@ options    = ["attack", "heal", "restart", "tunder clap and flash", "arshy"] # t
 STATE_EXPLORE = "explore" # the state that let's you explore
 STATE_BOSS = "boss" # the state you go into at the boss battle
 
-# rooms_template must exist in your full file
-# (not included in your snippet)
 
 # ─────────────────────────────────────────────
 # HELPERS
 # ─────────────────────────────────────────────
 
-def show_status(health, inventory):
-    items = ", ".join(inventory) if inventory else "empty"
-    print(f"\n  ♥  Health: {health}   |   Inventory: {items}")
-    print("  " + "─" * 44)
+def show_status(health, inventory): # the def that holds the health and inventory 
+    items = ", ".join(inventory) if inventory else "empty" # the join method combines everything in the list 
+    print(f"\n  ♥  Health: {health}   |   Inventory: {items}") # prints the health and items  
+    print("  " + "─" * 44) # line spacing 
 
-def describe_room(room_name, player_name, rooms):
-    desc = rooms[room_name]["description"]
-    print("\n" + desc.format(name=player_name))
+def describe_room(room_name, player_name, rooms): # holds room  name (cell, armory), player name, and room template
+    desc = rooms[room_name]["description"] # frinds the room name and the description in it 
+    print("\n" + desc.format(name=player_name)) # prints the desc as well as the player name
 
 def look(room_name, player_name, inventory, health, rooms):
     print("\nYou take a careful look around...")
