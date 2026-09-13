@@ -175,18 +175,18 @@ def describe_room(room_name, player_name, rooms): # holds room  name (cell, armo
 
 def look(room_name, player_name, inventory, health, rooms): # holds those parameters
     print("\nYou take a careful look around...") # prints that
-    describe_room(room_name, player_name, rooms) 
-    show_status(health, inventory)
+    describe_room(room_name, player_name, rooms) # prints sthat 
+    show_status(health, inventory) # and that 
 
-def handle_item(room, inventory, health):
-    if "item" in room:
-        item = room["item"]
-        print(f"\nYou notice a {item.upper()} here. Pick it up? (yes/no)")
-        if input("> ").strip().lower() == "yes":
-            inventory.append(item)
-            print(f"You picked up the {item}.")
-            del room["item"]
-            if item == "health potion":
+def handle_item(room, inventory, health): # holds that 
+    if "item" in room:  # if there's an item in the room 
+        item = room["item"] # check the item in the room
+        print(f"\nYou notice a {item.upper()} here. Pick it up? (yes/no)") # ask for the item  
+        if input("> ").strip().lower() == "yes": # if you say yes
+            inventory.append(item) # get added to your inventory 
+            print(f"You picked up the {item}.") # prints that 
+            del room["item"] # del the item
+            if item == "health potion": 
                 health = min(100, health + 10)
                 print("You feel energy surge through you! (+10 health)")
     return health
