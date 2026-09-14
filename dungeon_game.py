@@ -185,11 +185,11 @@ def handle_item(room, inventory, health): # holds that
         if input("> ").strip().lower() == "yes": # if you say yes
             inventory.append(item) # get added to your inventory 
             print(f"You picked up the {item}.") # prints that 
-            del room["item"] # del the item
-            if item == "health potion": 
-                health = min(100, health + 10)
-                print("You feel energy surge through you! (+10 health)")
-    return health
+            del room["item"] # del the item # del item in the room
+            if item == "health potion": # if there's a health potion in the room 
+                health = min(100, health + 10) # you can get up to + 10 
+                print("You feel energy surge through you! (+10 health)") # prints that 
+    return health # you get that much health 
 
 def analyze_inventory(inventory, search_item):
     count = sum(1 for item in inventory if item == search_item)
