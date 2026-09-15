@@ -191,45 +191,48 @@ def handle_item(room, inventory, health): # holds that
                 print("You feel energy surge through you! (+10 health)") # prints that 
     return health # you get that much health 
 
-def analyze_inventory(inventory, search_item):
-    count = sum(1 for item in inventory if item == search_item)
-    if count > 0:
-        return f"You have {count} {search_item}(s)."
-    return f"You do not have a {search_item}."
+# unused for now 
 
-def handle_guard(room, inventory, health):
-    if room.get("guard") and "key" not in inventory:
-        print("\nThe guard jolts awake and steps in front of you!")
-        if "sword" in inventory:
-            print("You raise your sword. He backs away and drops the KEY.")
-            inventory.append("key")
-            if "item" in room:
-                del room["item"]
-            room["guard"] = False
-        else:
-            print("He shoves you hard! You stumble back and lose 1 health.")
-            health -= 1
-            if health <= 0:
-                print("\nYou collapse from your wounds. Game over.")
-                return health, True
-    return health, False
+def analyze_inventory(inventory, search_item): # holds that 
+    # Count how many times search_item appears in the inventory list
+    count = sum(1 for item in inventory if item == search_item) 
+    if count > 0: # if you have items
+        return f"You have {count} {search_item}(s)." # print that
+    return f"You do not have a {search_item}." # prints that if you are broke :D
+
+def handle_guard(room, inventory, health): # holds that 
+    if room.get("guard") and "key" not in inventory: # checks if the guard is there and if you have the key 
+        print("\nThe guard jolts awake and steps in front of you!") # prints that
+        if "sword" in inventory: # if the sword is in the inveontory 
+            print("You raise your sword. He backs away and drops the KEY.") # prints that 
+            inventory.append("key") # you get a key in your inventory 
+            if "item" in room: # if there's an item in the room 
+                del room["item"] # delete the item in the room 
+            room["guard"] = False # the guard being there is NO LONGER MUHAHAHHAHAHAHHAHA
+        else: 
+            print("He shoves you hard! You stumble back and lose 1 health.") # prints that if you don't have the sword
+            health -= 15 # your health decreases by 15
+            if health <= 0: # if you have that much health you die 
+                print("\nYou collapse from your wounds. Game over.") # prints that 
+                return health, True # if you dead
+    return health, False # if your alive
 
 # ─────────────────────────────────────────────
 # STATE: EXPLORE
 # ─────────────────────────────────────────────
 
-def state_explore(player_name, health, inventory, current_room, rooms):
-    room = rooms[current_room]
+def state_explore(player_name, health, inventory, current_room, rooms): # holds those arguments 
+    room = rooms[current_room] # checks the room you are currently in 
 
-    describe_room(current_room, player_name, rooms)
-    show_status(health, inventory)
+    describe_room(current_room, player_name, rooms) # holds that 
+    show_status(health, inventory) # holds that 
 
-    if room.get("guard"):
-        health, game_over = handle_guard(room, inventory, health)
-        if game_over:
-            return health, current_room, STATE_EXPLORE, True
+    if room.get("guard"): # checks to see if the guard is there
+        health, game_over = handle_guard(room, inventory, health) # game_over contains that 
+        if game_over: # has that 
+            return health, current_room, STATE_EXPLORE, True # returns that, the game has ENDED!!!
 
-    health = handle_item(room, inventory, health)
+    health = handle_item(room, inventory, health) 
 
     exits = room["exits"]
     print(f"Exits: {', '.join(exits.keys())}")
