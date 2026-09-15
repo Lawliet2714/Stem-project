@@ -232,40 +232,39 @@ def state_explore(player_name, health, inventory, current_room, rooms): # holds 
         if game_over: # has that 
             return health, current_room, STATE_EXPLORE, True # returns that, the game has ENDED!!!
 
-    health = handle_item(room, inventory, health) 
+    health = handle_item(room, inventory, health) # holds that 
 
-    exits = room["exits"]
-    print(f"Exits: {', '.join(exits.keys())}")
-    choice = input("> ").strip().lower()
+    exits = room["exits"] # In the each room it checks for the exits 
+    print(f"Exits: {', '.join(exits.keys())}") # prints that 
+    choice = input("> ").strip().lower() # ask for input 
 
-    if choice == "look":
-        look(current_room, player_name, inventory, health, rooms)
+    if choice == "look": # if you type look 
+        look(current_room, player_name, inventory, health, rooms) # prints the function 
 
-    elif choice in exits:
-        next_room = exits[choice]
-        if room.get("locked_north") and choice == "north" and "key" not in inventory:
-            print("\n[!] The iron door is locked. You need a KEY.")
-        else:
-            current_room = next_room
-            describe_room(current_room, player_name, rooms)
+    elif choice in exits: # else if choice in exits 
+        next_room = exits[choice] # if your choice that you picked was an exit
+        if room.get("locked_north") and choice == "north" and "key" not in inventory: # if you go locked north you can't 
+            print("\n[!] The iron door is locked. You need a KEY.") # prints that 
+        else: # else
+            current_room = next_room # you go to the next room 
+            describe_room(current_room, player_name, rooms) # prints that 
+    else: # else
+        print(f"\n[!] {choice} is not something you can do...") # prints if there's no such thing 
 
-    else:
-        print(f"\n[!] {choice} is not something you can do...")
-
-    next_state = rooms[current_room].get("state", STATE_EXPLORE)
-    return health, current_room, next_state, False
+    next_state = rooms[current_room].get("state", STATE_EXPLORE) # the next state of the game checks the room and defults into an explore state
+    return health, current_room, next_state, False # keeps the game running
 
 # ─────────────────────────────────────────────
 # STATE: BOSS
 # ─────────────────────────────────────────────
 
-def state_boss(player_name, health, inventory, current_room, rooms):
-    boss_health = 100
+def state_boss(player_name, health, inventory, current_room, rooms): # Boss battle starts
+    boss_health = 150  # Boss Health 
 
-    while True:
-        computer = random.choice(boss_moves)
-        print(f"\nThe boss prepares a {computer}!")
-        player = input("Choose your move (attack, heal, restart, Tunder Clap And Flash): ").lower().strip()
+    while True: # while loop
+        computer = random.choice(boss_moves) # the computer chooses a random list of moves
+        print(f"\nThe boss prepares a {computer}!") # prints that with the move it picked
+        player = input("Choose your move (attack, heal, restart, Tunder Clap And Flash): ").lower().strip() # you can type in any of those attacks
 
         # Handle "description" or "description - <move>"
         if player.startswith("description"):
