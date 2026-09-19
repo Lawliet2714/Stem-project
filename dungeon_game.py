@@ -277,26 +277,21 @@ def state_boss(player_name, health, inventory, current_room, rooms): # Boss batt
             continue  # re-prompt without advancing the turn
         if player not in options: # if the move dosen't exist 
             print("Invalid move.") # prints that 
-            continue 
+            continue # It skips all the combat logic below and sends the game back to the top of the 'while True' loop so the player can actually attack.
 
+        elif player == "restart": # if they input restart 
+            print("\nRestarting the game...\n") # prints that 
+            play() # starts the game from the beginning
+            return health, current_room, STATE_BOSS, True # returns those to how they were og 
 
-        if player not in options:
-            print("Invalid move.")
-            continue
+        elif player == "heal": # if they heal
+            health = min(100, health + 20) # they gain that much 
+            print(f"You healed! Health is now {health}.") # prints that 
 
-        elif player == "restart":
-            print("\nRestarting the game...\n")
-            play()
-            return health, current_room, STATE_BOSS, True
+        elif player == "attack": # if they type attack 
+            damage = weapon_manager.light() # it goes the wepon manager and goes to light attack 
 
-        elif player == "heal":
-            health = min(100, health + 20)
-            print(f"You healed! Health is now {health}.")
-
-        elif player == "attack":
-            damage = weapon_manager.light()
-
-            if computer == "parry":
+            if computer == "parry": 
                 boss_health -= damage
                 print(f"He tries to parry but you're too precise! Dealt {damage} damage!")
 
