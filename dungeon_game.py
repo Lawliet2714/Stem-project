@@ -275,9 +275,9 @@ def state_boss(player_name, health, inventory, current_room, rooms): # Boss batt
                 move_to_describe = computer  # default to the boss's current move
             describe_move(move_to_describe)
             continue  # re-prompt without advancing the turn
-        if player not in options:
-            print("Invalid move.")
-            continue
+        if player not in options: # if the move dosen't exist 
+            print("Invalid move.") # prints that 
+            continue 
 
 
         if player not in options:
