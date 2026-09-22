@@ -365,27 +365,27 @@ def describe_move(move_name):
 # ─────────────────────────────────────────────
 
 def play():
-    rooms = copy.deepcopy(rooms_template)
-    player_name = input("What is your name, adventurer? ").strip()
-    health      = 100
-    inventory   = []
-    current_room = "cell"
-    state = STATE_EXPLORE
+    rooms = copy.deepcopy(rooms_template) # makes a new template of the game 
+    player_name = input("What is your name, adventurer? ").strip() # asks what's your name 
+    health      = 100 
+    inventory   = [] 
+    current_room = "cell" # starts in the cell 
+    state = STATE_EXPLORE # lets it explore
 
     print(f"\nWelcome, {player_name}. The dungeon stretches ahead.\n")
 
     states = {
-        STATE_EXPLORE: state_explore,
-        STATE_BOSS:    state_boss,
+        STATE_EXPLORE: state_explore, # calls state_explore that 
+        STATE_BOSS:    state_boss, # calss state that 
     }
 
     while True:
-        handler = states[state]
-        health, current_room, state, game_over = handler(
+        handler = states[state] # the handler checks the states
+        health, current_room, state, game_over = handler( # Runs the current state function and unpacks its returned values
             player_name, health, inventory, current_room, rooms
         )
-        if game_over:
-            return
+        if game_over:# Checks if the game has ended (win, loss, or restart)
+            return # # Exits the play() function and stops the loop
 
-if __name__ == "__main__":
-    play()
+if __name__ == "__main__": # Checks if this script is being run directly
+    play() # Starts the game by calling the main play function
